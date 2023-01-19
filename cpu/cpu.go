@@ -14,11 +14,11 @@ type CPU struct {
 	readyForNewProcess chan bool
 }
 
-func NewCPU(newProcessChannel chan bool) *CPU {
+func NewCPU(readySignaler chan bool) *CPU {
 	return &CPU{
 		interruptPin:       make(chan bool),
 		ticker:             time.NewTicker(1 * time.Millisecond),
-		readyForNewProcess: newProcessChannel,
+		readyForNewProcess: readySignaler,
 	}
 }
 
