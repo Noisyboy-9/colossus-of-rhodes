@@ -1,4 +1,4 @@
-package queues
+package queue
 
 import "github.com/noisyboy-9/colossus/process"
 
