@@ -10,24 +10,24 @@ import (
 
 const DefaultQuantum = 100 * time.Millisecond
 
-type RoundRobinScheduler struct {
+type roundRobinScheduler struct {
 	counter int
 	quantum time.Duration
 	timer   *timers.WatchDogTimer
 }
 
-func NewRoundRobinScheduler(quantum time.Duration, timer *timers.WatchDogTimer) *RoundRobinScheduler {
-	return &RoundRobinScheduler{
+func newRoundRobinScheduler(quantum time.Duration, timer *timers.WatchDogTimer) *roundRobinScheduler {
+	return &roundRobinScheduler{
 		quantum: quantum,
 		timer:   timer,
 	}
 }
 
-func (rs *RoundRobinScheduler) GetType() SchedulerType {
+func (rs *roundRobinScheduler) GetType() SchedulerType {
 	return ROUND_ROBIN
 }
 
-func (rs *RoundRobinScheduler) Schedule(q queue.Queue) *process.Process {
+func (rs *roundRobinScheduler) Schedule(q queue.Queue) *process.Process {
 	p := q.GetByIndex(rs.counter)
 	rs.counter = (rs.counter + 1) % queue.DegreeOfMultiprogramming
 
