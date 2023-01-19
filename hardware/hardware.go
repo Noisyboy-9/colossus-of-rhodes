@@ -1,4 +1,4 @@
-package main
+package hardware
 
 import (
 	"github.com/noisyboy-9/colossus/cpu"
