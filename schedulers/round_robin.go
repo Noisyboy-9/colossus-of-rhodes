@@ -8,6 +8,8 @@ import (
 	"github.com/noisyboy-9/colossus/queue"
 )
 
+const DefaultQuantum = 100 * time.Millisecond
+
 type RoundRobinScheduler struct {
 	counter int
 	quantum time.Duration
