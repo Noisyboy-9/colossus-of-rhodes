@@ -18,6 +18,9 @@ func NewReadyQueue() *ReadyQueue {
 		capacity:  DegreeOfMultiprogramming,
 	}
 }
+func (r *ReadyQueue) GetByIndex(index int) *process.Process {
+	return r.processes[index]
+}
 
 func (r *ReadyQueue) Add(p *process.Process) error {
 	if r.IsFull() {

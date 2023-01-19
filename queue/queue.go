@@ -9,4 +9,5 @@ type Queue interface {
 	Remove(p *process.Process) error
 	IsFull() bool
 	IsEmpty() bool
+	GetByIndex(i int) *process.Process
 }
