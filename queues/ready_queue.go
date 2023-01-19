@@ -8,33 +8,45 @@ import (
 )
 
 type ReadyQueue struct {
-	length int
-	queue  []*process.Process
+	processes []*process.Process
+	capacity  int
 }
 
-func NewReadyQueue(length int) *ReadyQueue {
+func NewReadyQueue() *ReadyQueue {
 	return &ReadyQueue{
-		length: length,
-		queue:  make([]*process.Process, length),
+		processes: make([]*process.Process, DegreeOfMultiprogramming),
+		capacity:  DegreeOfMultiprogramming,
 	}
 }
 
-func (rq *ReadyQueue) AddProcess(p *process.Process) error {
-	if len(rq.queue) >= rq.length {
-		return errors.New("ready queue is full")
+func (r *ReadyQueue) Add(p *process.Process) error {
+	if r.IsFull() {
+		return errors.New(fmt.Sprintf("ready queue with degree of multiprogramming: %v is full", DegreeOfMultiprogramming))
 	}
 
-	rq.queue = append(rq.queue, p)
+	r.processes = append(r.processes, p)
 	return nil
 }
 
-func (rq *ReadyQueue) RemoveProcess(target *process.Process) error {
-	for i, p := range rq.queue {
-		if target.Id() == p.Id() {
-			rq.queue = append(rq.queue[:i], rq.queue[i+1:]...)
+func (r *ReadyQueue) Remove(target *process.Process) error {
+	if r.IsEmpty() {
+		return errors.New("call remove process on empty queue")
+	}
+
+	for i, p := range r.processes {
+		if p.Id() == target.Id() {
+			r.processes = append(r.processes[:i], r.processes[i+1:]...)
 			return nil
 		}
 	}
 
-	return errors.New(fmt.Sprintf("process with pid: %v doesn't exist", target.Id()))
+	return errors.New(fmt.Sprintf("error with pid: %v can't be found in ready queue", target.Id()))
+}
+
+func (r *ReadyQueue) IsFull() bool {
+	return len(r.processes) == r.capacity
+}
+
+func (r *ReadyQueue) IsEmpty() bool {
+	return len(r.processes) == 0
 }

@@ -1,6 +1,8 @@
-package storages
+package queues
 
 import "github.com/noisyboy-9/colossus/process"
+
+const DegreeOfMultiprogramming = 10
 
 type Queue interface {
 	Add(p *process.Process) error
