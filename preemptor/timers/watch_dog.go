@@ -3,7 +3,7 @@ package timers
 import (
 	"time"
 
-	"github.com/noisyboy-9/colossus/cpu"
+	"github.com/noisyboy-9/colossus-of-rhodes/cpu"
 )
 
 type WatchDogTimer struct {

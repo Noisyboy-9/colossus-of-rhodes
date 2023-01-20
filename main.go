@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/noisyboy-9/colossus/dispatcher"
-	"github.com/noisyboy-9/colossus/hardware"
-	"github.com/noisyboy-9/colossus/process"
-	"github.com/noisyboy-9/colossus/queue"
-	"github.com/noisyboy-9/colossus/schedulers"
+	"github.com/noisyboy-9/colossus-of-rhodes/dispatcher"
+	"github.com/noisyboy-9/colossus-of-rhodes/hardware"
+	"github.com/noisyboy-9/colossus-of-rhodes/process"
+	"github.com/noisyboy-9/colossus-of-rhodes/queue"
+	"github.com/noisyboy-9/colossus-of-rhodes/schedulers"
 )
 
 func main() {

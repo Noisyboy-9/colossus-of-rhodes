@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/noisyboy-9/colossus/process"
+	"github.com/noisyboy-9/colossus-of-rhodes/process"
 )
 
 type ReadyQueue struct {

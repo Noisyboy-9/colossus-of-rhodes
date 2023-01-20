@@ -1,6 +1,6 @@
 package queue
 
-import "github.com/noisyboy-9/colossus/process"
+import "github.com/noisyboy-9/colossus-of-rhodes/process"
 
 const DegreeOfMultiprogramming = 10
 

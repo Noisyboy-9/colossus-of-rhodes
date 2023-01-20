@@ -3,9 +3,9 @@ package schedulers
 import (
 	"time"
 
-	"github.com/noisyboy-9/colossus/preemptor/timers"
-	"github.com/noisyboy-9/colossus/process"
-	"github.com/noisyboy-9/colossus/queue"
+	"github.com/noisyboy-9/colossus-of-rhodes/preemptor/timers"
+	"github.com/noisyboy-9/colossus-of-rhodes/process"
+	"github.com/noisyboy-9/colossus-of-rhodes/queue"
 )
 
 const DefaultQuantum = 100 * time.Millisecond

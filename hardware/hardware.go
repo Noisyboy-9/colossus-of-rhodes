@@ -1,8 +1,8 @@
 package hardware
 
 import (
-	"github.com/noisyboy-9/colossus/cpu"
-	"github.com/noisyboy-9/colossus/preemptor/timers"
+	"github.com/noisyboy-9/colossus-of-rhodes/cpu"
+	"github.com/noisyboy-9/colossus-of-rhodes/preemptor/timers"
 )
 
 type Hardware struct {

@@ -1,3 +1,3 @@
-module github.com/noisyboy-9/colossus
+module github.com/noisyboy-9/colossus-of-rhodes
 
 go 1.19

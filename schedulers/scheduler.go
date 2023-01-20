@@ -3,9 +3,9 @@ package schedulers
 import (
 	"fmt"
 
-	"github.com/noisyboy-9/colossus/hardware"
-	"github.com/noisyboy-9/colossus/process"
-	"github.com/noisyboy-9/colossus/queue"
+	"github.com/noisyboy-9/colossus-of-rhodes/hardware"
+	"github.com/noisyboy-9/colossus-of-rhodes/process"
+	"github.com/noisyboy-9/colossus-of-rhodes/queue"
 )
 
 type SchedulerType int
