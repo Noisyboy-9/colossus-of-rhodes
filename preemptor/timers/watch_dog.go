@@ -1,83 +1,48 @@
 package timers
 
 import (
-	"errors"
-	"fmt"
 	"time"
-
-	"github.com/noisyboy-9/colossus/cpu"
 )
 
 type WatchDogTimer struct {
-	ticker      *time.Ticker
-	cpu         *cpu.CPU
-	stopChannel chan bool
+	ticker  *time.Ticker
+	done    chan bool
+	working bool
 }
 
-func (t *WatchDogTimer) stopRoutine() error {
-	if !t.IsWorking() {
-		return errors.New("stop routine called on stopped timer")
-	}
-
-	t.ticker.Stop()
-	t.ticker = nil
-	return nil
-}
-
-func NewWatchDogTimer(c *cpu.CPU) *WatchDogTimer {
-	return &WatchDogTimer{
-		ticker:      nil,
-		cpu:         c,
-		stopChannel: make(chan bool),
-	}
-}
-
-func (t *WatchDogTimer) StartTimer(timeToGoOff time.Duration) error {
-	if t.IsWorking() {
-		return errors.New("start timer call on already started timer")
-	}
-
-	t.ticker = time.NewTicker(timeToGoOff)
-
-	go func() {
-		for {
-			select {
-			case <-t.ticker.C:
-				t.Preempte()
-			case <-t.stopChannel:
-				err := t.stopRoutine()
-				if err != nil {
-					panic(err)
-				}
-				break
-			}
+func (w *WatchDogTimer) countTime() {
+	for {
+		select {
+		case <-w.ticker.C:
+			w.Preempte()
+		case <-w.done:
+			w.working = false
+			w.ticker.Stop()
+			break
 		}
-	}()
-
-	return nil
+	}
 }
 
-func (t *WatchDogTimer) IsWorking() bool {
-	return t.ticker != nil
+func (w *WatchDogTimer) Preempte() {
+
 }
 
-func (t *WatchDogTimer) StopTimer() error {
-	if !t.IsWorking() {
-		return errors.New("stop timer called on empty timer")
-	}
-	t.stopChannel <- true
-	t.ticker = nil
-	return nil
+func (w *WatchDogTimer) Start(d time.Duration) {
+	w.ticker = time.NewTicker(d)
+
+	go w.countTime()
 }
 
-func (t *WatchDogTimer) Preempte() {
-	err := t.cpu.Interrupt()
-	if err != nil {
-		panic(fmt.Sprintf("watchdog blew on empty cpu: %v", err.Error()))
-	}
+func (w *WatchDogTimer) Stop() {
+	w.done <- true
+}
 
-	err = t.StopTimer()
-	if err != nil {
-		panic(err)
-	}
+func (w *WatchDogTimer) Reset(d time.Duration) {
+	w.ticker.Reset(d)
+
+	go w.countTime()
+}
+
+func (w *WatchDogTimer) Working() bool {
+	return w.working
 }

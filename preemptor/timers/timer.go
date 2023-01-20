@@ -5,6 +5,7 @@ import "time"
 type Timer interface {
 	Start(d time.Duration)
 	Stop()
-	Reset()
+	Reset(d time.Duration)
 	Working() bool
+	countTime()
 }
