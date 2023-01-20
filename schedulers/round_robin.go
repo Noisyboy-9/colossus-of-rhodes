@@ -27,16 +27,11 @@ func (rs *roundRobinScheduler) GetType() SchedulerType {
 	return ROUND_ROBIN
 }
 
-func (rs *roundRobinScheduler) Schedule(q queue.Queue) *process.Process {
-
-	// stop previous watch dog timer
-	p := q.GetByIndex(rs.counter)
+func (rs *roundRobinScheduler) Schedule(q queue.Queue) (selectedProcess *process.Process) {
+	selectedProcess = q.GetByIndex(rs.counter)
 	rs.counter = (rs.counter + 1) % queue.DegreeOfMultiprogramming
 
-	err := rs.timer.StartTimer(rs.quantum)
-	if err != nil {
-		panic(err)
-	}
+	rs.timer.Reset(rs.quantum)
 
-	return p
+	return selectedProcess
 }
