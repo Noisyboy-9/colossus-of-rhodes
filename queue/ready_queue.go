@@ -14,7 +14,7 @@ type ReadyQueue struct {
 
 func NewReadyQueue() *ReadyQueue {
 	return &ReadyQueue{
-		processes: make([]*process.Process, DegreeOfMultiprogramming),
+		processes: make([]*process.Process, 0),
 		capacity:  DegreeOfMultiprogramming,
 	}
 }

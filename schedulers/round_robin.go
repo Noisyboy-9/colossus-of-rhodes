@@ -28,6 +28,8 @@ func (rs *roundRobinScheduler) GetType() SchedulerType {
 }
 
 func (rs *roundRobinScheduler) Schedule(q queue.Queue) *process.Process {
+
+	// stop previous watch dog timer
 	p := q.GetByIndex(rs.counter)
 	rs.counter = (rs.counter + 1) % queue.DegreeOfMultiprogramming
 

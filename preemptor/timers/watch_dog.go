@@ -62,10 +62,11 @@ func (t *WatchDogTimer) IsWorking() bool {
 }
 
 func (t *WatchDogTimer) StopTimer() error {
-	if t.IsWorking() {
+	if !t.IsWorking() {
 		return errors.New("stop timer called on empty timer")
 	}
 	t.stopChannel <- true
+	t.ticker = nil
 	return nil
 }
 
@@ -73,5 +74,10 @@ func (t *WatchDogTimer) Preempte() {
 	err := t.cpu.Interrupt()
 	if err != nil {
 		panic(fmt.Sprintf("watchdog blew on empty cpu: %v", err.Error()))
+	}
+
+	err = t.StopTimer()
+	if err != nil {
+		panic(err)
 	}
 }
